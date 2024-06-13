@@ -166,7 +166,7 @@ const SignUp = () => {
             zipcode: zipCode,
           }),
         };
-
+        
         const response = await fetch(url, options);
         if (!response.ok) {
           setError("Network response was not ok");
