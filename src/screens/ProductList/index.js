@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "../../App.css";
 import myImg from "../../assets/1.jpg";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import config from "../../utils/config";
 
 function ProductList() {
-   const navigate = useNavigate();
+  const navigate = useNavigate();
   const [productData, setProductData] = useState([]);
   const [filterData, setFilterData] = useState([]);
 
@@ -14,7 +14,6 @@ function ProductList() {
   const [error, setError] = useState("");
 
   const [searchProduct, setSearchProduct] = useState("");
-
 
   useEffect(() => {
     getList();
@@ -50,32 +49,60 @@ function ProductList() {
   const onChangeSearch = (e) => {
     setSearchProduct(e.target.value);
 
-    const filteredData = productData.length > 0 && productData.filter((item) =>
-      item.name.toLowerCase().includes(e.target.value.toLowerCase())
-    );
+    const filteredData =
+      productData.length > 0 &&
+      productData.filter((item) =>
+        item.name.toLowerCase().includes(e.target.value.toLowerCase())
+      );
 
     setFilterData(filteredData);
   };
 
   return (
     <div>
-
       <div className="container">
-        <header className="headerProductList">
-          <div className="myImage">
-            <img src={myImg} className="image" />
+        <header className="navHeader">
+          <div className="leftRightDiv">
+            <div className="myImage">
+              <img src={myImg} className="image" />
+            </div>
+
+            <ul className="nav-ul">
+              <li>
+                <Link to="/">Products</Link>
+              </li>
+              <li>
+                <Link to="/addProduct">Add Products</Link>
+              </li>
+              <li>
+                <Link to="/profile">Profile</Link>
+              </li>
+              <li>
+                <Link to="/login">Logout({userData?.firstName})</Link>
+              </li>
+            </ul>
           </div>
-          <div>
-            <label className="navLabel">Products</label>
-            <label className="navLabel">Add Products</label>
-            <label className="navLabel">Profile</label>
-            <label className="navLabel">Logout ({userData?.firstName})</label>
+
+          <div className="leftRightDiv">
+            <ul className="nav-ul">
+              <li>
+                <Link to="/signup">Sign Up </Link>
+              </li>
+              <li>
+                <Link to="/login">Login </Link>
+              </li>
+            </ul>
           </div>
         </header>
 
         <body className="body1">
           <div className="body_b">
-            <h3 onClick={()=>navigate('/addProduct')} className="heading_addProduct">Product List</h3>
+            <h3
+              onClick={() => navigate("/addProduct")}
+              className="heading_addProduct"
+            >
+              Product List
+            </h3>
             <div className="input_div">
               {" "}
               <input
@@ -115,8 +142,12 @@ function ProductList() {
                 )}
               </table>
 
-              {error &&<div> <p>{error}</p></div>}
-
+              {error && (
+                <div>
+                  {" "}
+                  <p>{error}</p>
+                </div>
+              )}
             </div>
           </div>
         </body>

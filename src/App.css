@@ -201,3 +201,34 @@ tr{
   .heading_addProduct{
     /* margin-top: 25vh; */
   }
+
+  .navHeader{
+    background-color: #08c9c9;
+    height: 8vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .leftRightDiv{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+  }
+ 
+  .nav-ul {
+    padding: 5px;
+    list-style: none;
+    margin: 0px;background-color: 'red';
+  }
+  .nav-ul li{
+    display:inline-block; 
+    padding: 10px;
+  }
+  .nav-ul a{
+    text-decoration: none;
+    color: white;
+  }
+  
+  
+

@@ -72,8 +72,8 @@ const SignUp = () => {
       setError("Last Name should contain only alphabetic characters.");
       return false;
     }
-    if (firstName.length < 2) {
-      setError("First Name should be at least 2 characters long.");
+    if (lastName.length < 2) {
+      setError("Last Name should be at least 2 characters long.");
       return false;
     }
 
@@ -116,7 +116,7 @@ const SignUp = () => {
       return false;
     }
 
-    if (!address) {
+     if (!address) {
       setError("please enter Address");
       return false;
     }
