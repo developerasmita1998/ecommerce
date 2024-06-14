@@ -59,102 +59,58 @@ function ProductList() {
   };
 
   return (
-    <div>
-      <div className="container">
-        <header className="navHeader">
-          <div className="leftRightDiv">
-            <div className="myImage">
-              <img src={myImg} className="image" />
-            </div>
+    <div className="container">
+      <h3
+        onClick={() => navigate("/addProduct")}
+        className="heading_addProduct"
+      >
+        Product List
+      </h3>
+      <div className="input_div">
+        {" "}
+        <input
+          type="text"
+          onChange={(e) => onChangeSearch(e)}
+          value={searchProduct}
+          placeholder="Search Product"
+          className="input1"
+        />
+      </div>
 
-            <ul className="nav-ul">
-              <li>
-                <Link to="/">Products</Link>
-              </li>
-              <li>
-                <Link to="/addProduct">Add Products</Link>
-              </li>
-              <li>
-                <Link to="/profile">Profile</Link>
-              </li>
-              <li>
-                <Link to="/login">Logout({userData?.firstName})</Link>
-              </li>
-            </ul>
+      <div className="center-col">
+        <table>
+          <tr>
+            <td>S.NO.</td>
+            <td>Name</td>
+            <td>Price</td>
+            <td>Category</td>
+            <td>Operation</td>
+          </tr>
+
+          {filterData.length > 0 ? (
+            filterData.map((item, ind) => (
+              <tr>
+                <td>{ind + 1}</td>
+                <td>{item.name}</td>
+                <td>{item.price}</td>
+                <td>{item.category}</td>
+                <td>
+                  <button>Delete</button>
+                  <button className="update">Update</button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <p>{"No data found"}</p>
+          )}
+        </table>
+
+        {error && (
+          <div>
+            {" "}
+            <p>{error}</p>
           </div>
-
-          <div className="leftRightDiv">
-            <ul className="nav-ul">
-              <li>
-                <Link to="/signup">Sign Up </Link>
-              </li>
-              <li>
-                <Link to="/login">Login </Link>
-              </li>
-            </ul>
-          </div>
-        </header>
-
-        <body className="body1">
-          <div className="body_b">
-            <h3
-              onClick={() => navigate("/addProduct")}
-              className="heading_addProduct"
-            >
-              Product List
-            </h3>
-            <div className="input_div">
-              {" "}
-              <input
-                type="text"
-                onChange={(e) => onChangeSearch(e)}
-                value={searchProduct}
-                placeholder="Search Product"
-                className="input1"
-              />
-            </div>
-
-            <div className="center-col">
-              <table>
-                <tr>
-                  <td>S.NO.</td>
-                  <td>Name</td>
-                  <td>Price</td>
-                  <td>Category</td>
-                  <td>Operation</td>
-                </tr>
-
-                {filterData.length > 0 ? (
-                  filterData.map((item, ind) => (
-                    <tr>
-                      <td>{ind + 1}</td>
-                      <td>{item.name}</td>
-                      <td>{item.price}</td>
-                      <td>{item.category}</td>
-                      <td>
-                        <button>Delete</button>
-                        <button className="update">Update</button>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <p>{"No data found"}</p>
-                )}
-              </table>
-
-              {error && (
-                <div>
-                  {" "}
-                  <p>{error}</p>
-                </div>
-              )}
-            </div>
-          </div>
-        </body>
-
-        <footer className="footer">
-          <div className="footer1">E-Comm Dashboard</div>
-        </footer>
+        )}
       </div>
     </div>
   );

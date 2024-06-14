@@ -1,4 +1,4 @@
-const LIVE = 'http://192.168.1.8:4000/'
+const LIVE = 'http://192.168.1.6:4000/'
 
 
 const login = LIVE + 'login/'

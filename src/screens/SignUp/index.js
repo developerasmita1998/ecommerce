@@ -116,7 +116,7 @@ const SignUp = () => {
       return false;
     }
 
-     if (!address) {
+    if (!address) {
       setError("please enter Address");
       return false;
     }
@@ -166,7 +166,7 @@ const SignUp = () => {
             zipcode: zipCode,
           }),
         };
-        
+
         const response = await fetch(url, options);
         if (!response.ok) {
           setError("Network response was not ok");
@@ -181,149 +181,131 @@ const SignUp = () => {
 
   return (
     <div className="container">
-      <header className="header">
-        <div className="myImage">
-          <img src={myImg} className="image" />
+      <div className="register">
+        <h1>Register</h1>
+        <div>
+          <input
+            type="text"
+            onChange={(e) => setFirstName(e.target.value)}
+            value={firstName}
+            placeholder="Enter First Name"
+            className="input_signUp"
+          />
+        </div>
+        <div>
+          <input
+            type="text"
+            onChange={(e) => setLastName(e.target.value)}
+            value={lastName}
+            placeholder="Enter Last Name"
+            className="input_signUp"
+          />
         </div>
 
-        <div className="sign_login">
-          <label className="sign">SignUp</label>
-
-          <label className="login">Login</label>
+        <div>
+          <input
+            type="email"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            placeholder="Enter Email"
+            className="input_signUp"
+          />
         </div>
-      </header>
 
-      <body className="body">
-        <div className="register">
-          <h1>Register</h1>
-          <div>
-            <input
-              type="text"
-              onChange={(e) => setFirstName(e.target.value)}
-              value={firstName}
-              placeholder="Enter First Name"
-              className="input_signUp"
-            />
-          </div>
-          <div>
-            <input
-              type="text"
-              onChange={(e) => setLastName(e.target.value)}
-              value={lastName}
-              placeholder="Enter Last Name"
-              className="input_signUp"
-            />
-          </div>
-
-          <div>
-            <input
-              type="email"
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
-              placeholder="Enter Email"
-              className="input_signUp"
-            />
-          </div>
-
-          <div className="input_signUp_fieldset">
-            <fieldset>
-              <label>
-                Gender:
-                <input
-                  type="radio"
-                  value="option1"
-                  checked={selectOptions === "option1"}
-                  onChange={handleRadioChange}
-                />
-              </label>
-              <label>
-                Male
-                <input
-                  type="radio"
-                  value="option2"
-                  checked={selectOptions === "option2"}
-                  onChange={handleRadioChange}
-                />
-              </label>
-              <label>Female</label>
-            </fieldset>
-          </div>
-
-          <div className="input_signUp">
+        <div className="input_signUp_fieldset">
+          <fieldset>
             <label>
-              Date of Birth:
+              Gender:
               <input
-                type="date"
-                onChange={(e) => setDate(e.target.value)}
-                value={date}
-                className="dob"
+                type="radio"
+                value="option1"
+                checked={selectOptions === "option1"}
+                onChange={handleRadioChange}
               />
             </label>
-          </div>
-          <div>
-            <input
-              type="number"
-              onChange={(e) => setMobile(e.target.value)}
-              value={mobile}
-              placeholder="Enter Mobile"
-              className="input_signUp"
-            />
-          </div>
-          <div>
-            <input
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-              placeholder="Enter Password"
-              className="input_signUp"
-            />
-          </div>
-          <div>
-            <input
-              type="text"
-              onChange={(e) => setAddress(e.target.value)}
-              value={address}
-              placeholder="Enter Address"
-              className="input_signUp"
-            />
-          </div>
-
-          <div>
-            <input
-              type="text"
-              onChange={(e) => setZipCode(e.target.value)}
-              value={zipCode}
-              placeholder="Enter ZipCode"
-              className="input_signUp"
-            />
-          </div>
-          <div className="checkbox">
             <label>
+              Male
               <input
-                type="checkbox"
-                checked={isChecked}
-                onChange={handleCheckboxChange}
+                type="radio"
+                value="option2"
+                checked={selectOptions === "option2"}
+                onChange={handleRadioChange}
               />
-              I am agree to the terms and condition
             </label>
-          </div>
-          <div>
-            <button className="button_signUp" onClick={() => SignUpClicked()}>
-              Sign Up
-            </button>
-            {error && (
-              <div>
-                {" "}
-                <label>{error}</label>{" "}
-              </div>
-            )}
-          </div>
+            <label>Female</label>
+          </fieldset>
         </div>
-      </body>
 
-      <footer className="footer">
-        <div className="footer1">E-Comm Dashboard</div>
-      </footer>
+        <div className="input_signUp">
+          <label>
+            Date of Birth:
+            <input
+              type="date"
+              onChange={(e) => setDate(e.target.value)}
+              value={date}
+              className="dob"
+            />
+          </label>
+        </div>
+        <div>
+          <input
+            type="number"
+            onChange={(e) => setMobile(e.target.value)}
+            value={mobile}
+            placeholder="Enter Mobile"
+            className="input_signUp"
+          />
+        </div>
+        <div>
+          <input
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            placeholder="Enter Password"
+            className="input_signUp"
+          />
+        </div>
+        <div>
+          <input
+            type="text"
+            onChange={(e) => setAddress(e.target.value)}
+            value={address}
+            placeholder="Enter Address"
+            className="input_signUp"
+          />
+        </div>
+
+        <div>
+          <input
+            type="text"
+            onChange={(e) => setZipCode(e.target.value)}
+            value={zipCode}
+            placeholder="Enter ZipCode"
+            className="input_signUp"
+          />
+        </div>
+        <div className="checkbox">
+          <label>
+            <input
+              type="checkbox"
+              checked={isChecked}
+              onChange={handleCheckboxChange}
+            />
+            I am agree to the terms and condition
+          </label>
+        </div>
+        <div>
+          <button className="button_signUp" onClick={() => SignUpClicked()}>
+            Sign Up
+          </button>
+          {error && (
+            <div>
+              {" "}
+              <label>{error}</label>{" "}
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

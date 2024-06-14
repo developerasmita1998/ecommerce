@@ -1,46 +1,34 @@
-.container{
- display: flex; 
-height: 100vh;
-width: 100vw;
-flex-direction: column;
-background-color: white;
-
-}
-.header{
-  background-color: #08c9c9;
-  height: 8vh;
+.container {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  background-color: white;
 }
-.image{
-  width:35px;
+
+.navImage {
+  width: 35px;
   border-radius: 33px;
 }
-.myImage{
+
+.myImage {
   margin-left: 1.5vw;
 }
-.sign_login{
-margin-right: 25px;
-color: white;
-}
-.sign{
-}
-.login{
+
+.login {
   margin-left: 15px;
   color: white;
 }
-.body{
-height: 84vh;
-display: flex;
-justify-content: center;
-align-items: center;
-}
-.body_form{
 
+.body {
+  height: 84vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.input{
+.body_form {}
+
+.input {
   background-color: lavenderblush;
   border: #08c9c9;
   width: 15vw;
@@ -48,67 +36,45 @@ align-items: center;
   border-width: 5px;
   border: 1.5px solid #08c9c9;
   height: 3vh;
-
 }
-.button{
+
+.button {
   background-color: rgb(46, 201, 201);
   width: 7vw;
 
 }
 
-.footer{
+.footer {
   height: 8vh;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
   background-color: #08c9c9;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.footer1{
-  font-weight:700;
-}
 
-.navLabel{
-  margin-left: 20px;
-  color: white;
-}
 
-.headerProductList{
-  background-color: #08c9c9;
-  height: 8vh;
-  display: flex;
-  align-items: center;
-}
-.body1{
-  height: 84vh;
-  display: flex;
-  justify-content: center;
-  flex-direction: inherit;
-    align-items: center;
-}
-  
-placeholder{
+placeholder {
   color: gray;
-
 }
 
-table{
+table {
   border: 1px solid #08c9c9;
   border-collapse: collapse;
-
 }
-td{
+
+td {
   border: 2px solid #08c9c9;
   padding: 1px 45px 1px 45px;
 }
- 
 
-tr{
-  border: 1.5px solid #08c9c9; 
-
-
-
+tr {
+  border: 1.5px solid #08c9c9;
 }
-.input1{
+
+.input1 {
   border: 1px solid #08c9c9;
   width: 21vw;
   height: 5vh;
@@ -116,119 +82,113 @@ tr{
   margin-bottom: 18px;
   margin-top: 2vh;
 }
-.update{
+
+.update {
   color: blue;
-  border:none;
+  border: none;
   text-decoration: underline;
   background-color: white;
-  
-}
-.body_b{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* position: relative;
-  bottom: 26vh; */
+
 }
 
 .center-col {
-  /* flex: 1; */
-  /* background: #aaa; */
   overflow-y: scroll;
-  height: 350px;
-  }
-  .register{
-    display: flex;
-    flex-direction: column;
-  }
-  .input_signUp{
-    border: #08c9c9;
-    width: 19vw;
-    margin-bottom: 12px;
-    border-width: 5px;
-    border: 1.5px solid #08c9c9;
-    height: 3.4vh;
-    padding-left: 1vw;
-  }fieldset{
-    border: none;
-  }
-  .dob{
-    border: none;
-    margin-left: 3px;
-  }
-  .checkbox{
-    margin-top: 0.5vh;
-    margin-bottom: 1.5vh;
-  }
-  .button_signUp{
-    background-color: rgb(46, 201, 201);
-    width: 9vw;
-    height: 4vh;
+  height: 450px;
+}
 
-  }
-  .input_signUp_fieldset{
-    border: #08c9c9;
-    width: 20vw;
-    margin-bottom: 12px;
-    border-width: 5px;
-    border: 1.5px solid #08c9c9;
-    height: 4vh;
+.register {
+  display: flex;
+  flex-direction: column;
+}
 
-  }
-  .header2{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .input3{
-    border: 1px solid #08c9c9;
-    width: 18vw;
-    height: 5vh;
-    padding-left: 1vw;
-    margin-bottom: 0px;
-    margin-top: 2vh;
-  }
-  .input_div{
-    /* margin-bottom: 30vh;
-    margin-right: 40vh; */
-  }
-  .button1{
-    background-color: rgb(46, 201, 201);
-    width: 7vw;
-    padding: 8px;
-     margin-top: 2vh;
-  }
-  .heading_addProduct{
-    /* margin-top: 25vh; */
-  }
+.input_signUp {
+  border: #08c9c9;
+  width: 19vw;
+  margin-bottom: 12px;
+  border-width: 5px;
+  border: 1.5px solid #08c9c9;
+  height: 3.4vh;
+  padding-left: 1vw;
+}
 
-  .navHeader{
-    background-color: #08c9c9;
-    height: 8vh;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+fieldset {
+  border: none;
+}
 
-  .leftRightDiv{
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-  }
- 
-  .nav-ul {
-    padding: 5px;
-    list-style: none;
-    margin: 0px;background-color: 'red';
-  }
-  .nav-ul li{
-    display:inline-block; 
-    padding: 10px;
-  }
-  .nav-ul a{
-    text-decoration: none;
-    color: white;
-  }
-  
-  
+.dob {
+  border: none;
+  margin-left: 3px;
+}
 
+.checkbox {
+  margin-top: 0.5vh;
+  margin-bottom: 1.5vh;
+}
+
+.button_signUp {
+  background-color: rgb(46, 201, 201);
+  width: 9vw;
+  height: 4vh;
+
+}
+
+.input_signUp_fieldset {
+  border: #08c9c9;
+  width: 20vw;
+  margin-bottom: 12px;
+  border-width: 5px;
+  border: 1.5px solid #08c9c9;
+  height: 4vh;
+
+}
+
+.input3 {
+  border: 1px solid #08c9c9;
+  width: 18vw;
+  height: 5vh;
+  padding-left: 1vw;
+  margin-bottom: 0px;
+  margin-top: 2vh;
+}
+
+.input_div {}
+
+.button1 {
+  background-color: rgb(46, 201, 201);
+  width: 7vw;
+  padding: 8px;
+  margin-top: 2vh;
+}
+
+.heading_addProduct {}
+
+.navHeader {
+  background-color: #08c9c9;
+  height: 8vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.leftRightDiv {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.nav-ul {
+  padding: 5px;
+  list-style: none;
+  margin: 0px;
+  background-color: 'red';
+}
+
+.nav-ul li {
+  display: inline-block;
+  padding: 10px;
+}
+
+.nav-ul a {
+  text-decoration: none;
+  color: white;
+}

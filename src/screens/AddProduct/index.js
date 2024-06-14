@@ -129,19 +129,7 @@ const AddProduct = () => {
   return (
     <div>
       <div className="container">
-        <header className="headerProductList">
-          <div className="myImage">
-            <img src={myImg} className="image" />
-          </div>
-          <div>
-            <label className="navLabel">Products</label>
-            <label className="navLabel">Add Products</label>
-            <label className="navLabel">Profile</label>
-            <label className="navLabel">Logout ({userData?.firstName})</label>
-          </div>
-        </header>
-
-        <body className="body">
+ 
           <div className="input_div">
             <h1>Add Product</h1>
             <div>
@@ -187,11 +175,7 @@ const AddProduct = () => {
             {error && <div><label>{error}</label> </div> }
 
           </div>
-        </body>
-
-        <footer className="footer">
-          <div className="footer1">E-Comm Dashboard</div>
-        </footer>
+      
       </div>
     </div>
   );

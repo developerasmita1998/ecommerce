@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import config from "../../utils/config";
 
 function Login() {
-     const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [loginDataStore, setLoginDataStore] = useState("");
 
@@ -31,19 +31,19 @@ function Login() {
     }
     setError("");
     try {
-        let url = config.login
-        let options = {
-            method: "POST",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
+      let url = config.login;
+      let options = {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            email: email,
-            password: password,
-          }),
-    }
-      const response = await fetch(url,options);
+          email: email,
+          password: password,
+        }),
+      };
+      const response = await fetch(url, options);
       if (!response.ok) {
         setError("Network response was not ok");
       }
@@ -51,7 +51,7 @@ function Login() {
       if (data) {
         setLoginDataStore(data);
         localStorage.setItem("data", JSON.stringify(data));
-        navigate('/')
+        navigate("/");
       } else {
         setError(data);
         setLoginDataStore([]);
@@ -63,51 +63,34 @@ function Login() {
 
   return (
     <div className="container">
-      <header className="header">
-        <div className="myImage">
-          <img src={myImg} className="image" />
+      <div className="body_form">
+        <h2>Login</h2>
+
+        <div>
+          <input
+            type="email"
+            onChange={(e) => setEmail(e.target.value)}
+            className="input"
+            value={email}
+          />
         </div>
 
-        <div className="sign_login">
-          <label className="sign">SignUp</label>
-          
-          <label className="login">Login</label>
+        <div>
+          <input
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+            className="input"
+            value={password}
+          />
         </div>
-      </header>
-      <body className="body">
-        <div className="body_form">
-          <h2>Login</h2>
 
-          <div>
-            <input
-              type="email"
-              onChange={(e) => setEmail(e.target.value)}
-              className="input"
-              value={email}
-            />
-          </div>
-
-          <div>
-            <input
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
-              className="input"
-              value={password}
-            />
-          </div>
-
-          <div>
-            <button onClick={login} className="button">
-              Login
-            </button>
-            <div>{error && <p style={{ color: "red" }}>{error}</p>}</div>
-          </div>
+        <div>
+          <button onClick={login} className="button">
+            Login
+          </button>
+          <div>{error && <p style={{ color: "red" }}>{error}</p>}</div>
         </div>
-      </body>
-
-      <footer className="footer">
-        <div className="footer1">E-Comm Dashboard</div>
-      </footer>
+      </div>
     </div>
   );
 }
