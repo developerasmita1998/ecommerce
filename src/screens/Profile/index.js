@@ -11,7 +11,7 @@ const Profile = () => {
   const [error, setError] = useState("");
 
   const [photo, setPhoto] = useState(null);
-  const [userData, setUserData] = useState([]);
+  const [profileImage, setProfileImage] = useState(null);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("asmita@gmail.com");
@@ -20,6 +20,48 @@ const Profile = () => {
   const [mobile, setMobile] = useState("");
   const [address, setAddress] = useState("");
   const [zipCode, setZipCode] = useState("");
+
+  useEffect(() => {
+    getUserDetailApi();
+  }, []);
+
+  const getUserDetailApi = async () => {
+    setError("");
+    try {
+      const temp = JSON.parse(localStorage.getItem("data"));
+      const url = config.userDetail + temp?.result?._id;
+      let options = {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${temp?.auth}`,
+        },
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        setError("Response was not ok");
+      }
+      const data = await response.json();
+      console.log(data);
+
+      if (data) {
+        setFirstName(data.firstName);
+        setLastName(data.lastName);
+        setEmail(data.email);
+        setSelectOptions(data.gender === "male" ? "option1" : "option2");
+        setDate(data.dateOfBirth);
+        setMobile(data.mobile);
+        setAddress(data.address);
+        setZipCode(data.zipcode);
+        setProfileImage(data.profileImage);
+      } else {
+        setError(data.result);
+      }
+    } catch (error) {
+      setError(error.message);
+    }
+  };
 
   const handleRadioChange = (e) => {
     setSelectOptions(e.target.value);
@@ -35,7 +77,7 @@ const Profile = () => {
     const zipCodeRegex = /^[0-9]{6}$/;
 
     setError("");
-    if (!photo) {
+    if (!photo && !profileImage) {
       setError("Please choose photo");
       return false;
     }
@@ -97,12 +139,11 @@ const Profile = () => {
 
   const updateProfile = async () => {
     const validated = validate();
-
     if (validated) {
       try {
         const temp = JSON.parse(localStorage.getItem("data"));
         let token = temp?.auth;
-        let userID = temp?.user?._id;
+        let userID = temp?.result?._id;
 
         const formData = new FormData();
         if (photo) {
@@ -124,7 +165,6 @@ const Profile = () => {
         let options = {
           method: "PUT",
           headers: {
-            // 'Content-Type': 'multipart/form-data'
             Authorization: `Bearer ${token}`,
           },
           body: formData,
@@ -135,9 +175,10 @@ const Profile = () => {
         }
         const data = await response.json();
         if (data && data?.result) {
-          setError(data.result);
-        } else {
+          localStorage.setItem("data", JSON.stringify(data));
           navigate("/");
+        } else {
+          setError(data?.message);
         }
       } catch (error) {
         setError(error.message);
@@ -147,129 +188,133 @@ const Profile = () => {
 
   return (
     <div className="container">
-    
-        <div className="register">
-          <h1>Update Profile</h1>
-          <div>
-            <input
-              type="file"
-              onChange={(e) => setPhoto(e.target.files[0])}
-              className="input_signUp"
+      <div className="register">
+        <h1>Update Profile</h1>
+        <div>
+          <input
+            type="file"
+            onChange={(e) => setPhoto(e.target.files[0])}
+            className="input_signUp"
+          />
+          {photo ? (
+            <img
+              width={"20px"}
+              height={"20px"}
+              src={photo ? URL.createObjectURL(photo) : null}
             />
-            {photo && (
-              <img
-                width={"20px"}
-                height={"20px"}
-                src={URL.createObjectURL(photo)}
-              />
-            )}
-          </div>
-          <div>
-            <input
-              type="text"
-              onChange={(e) => setFirstName(e.target.value)}
-              value={firstName}
-              placeholder="Enter First Name"
-              className="input_signUp"
+          ) : (
+            <img
+              width={"20px"}
+              height={"20px"}
+              src={profileImage ? profileImage : null}
             />
-          </div>
-          <div>
-            <input
-              type="text"
-              onChange={(e) => setLastName(e.target.value)}
-              value={lastName}
-              placeholder="Enter Last Name"
-              className="input_signUp"
-            />
-          </div>
-
-          <div>
-            <input
-              type="email"
-              value={email}
-              disabled
-              placeholder="Enter Email"
-              className="input_signUp"
-            />
-          </div>
-
-          <div className="input_signUp_fieldset">
-            <fieldset>
-              <label>
-                Gender:
-                <input
-                  type="radio"
-                  value="option1"
-                  checked={selectOptions === "option1"}
-                  onChange={handleRadioChange}
-                />
-              </label>
-              <label>
-                Male
-                <input
-                  type="radio"
-                  value="option2"
-                  checked={selectOptions === "option2"}
-                  onChange={handleRadioChange}
-                />
-              </label>
-              <label>Female</label>
-            </fieldset>
-          </div>
-
-          <div className="input_signUp">
-            <label>
-              Date of Birth:
-              <input
-                type="date"
-                onChange={(e) => setDate(e.target.value)}
-                value={date}
-                className="dob"
-              />
-            </label>
-          </div>
-          <div>
-            <input
-              type="number"
-              onChange={(e) => setMobile(e.target.value)}
-              value={mobile}
-              placeholder="Enter Mobile"
-              className="input_signUp"
-            />
-          </div>
-
-          <div>
-            <input
-              type="text"
-              onChange={(e) => setAddress(e.target.value)}
-              value={address}
-              placeholder="Enter Address"
-              className="input_signUp"
-            />
-          </div>
-
-          <div>
-            <input
-              type="text"
-              onChange={(e) => setZipCode(e.target.value)}
-              value={zipCode}
-              placeholder="Enter ZipCode"
-              className="input_signUp"
-            />
-          </div>
-          <div>
-            <button className="button_signUp" onClick={() => updateProfile()}>
-              Update
-            </button>
-            {error && (
-              <div>
-                {" "}
-                <label>{error}</label>{" "}
-              </div>
-            )}
-          </div>
+          )}
+        </div>
+        <div>
+          <input
+            type="text"
+            onChange={(e) => setFirstName(e.target.value)}
+            value={firstName}
+            placeholder="Enter First Name"
+            className="input_signUp"
+          />
+        </div>
+        <div>
+          <input
+            type="text"
+            onChange={(e) => setLastName(e.target.value)}
+            value={lastName}
+            placeholder="Enter Last Name"
+            className="input_signUp"
+          />
         </div>
 
+        <div>
+          <input
+            type="email"
+            value={email}
+            disabled
+            placeholder="Enter Email"
+            className="input_signUp"
+          />
+        </div>
+
+        <div className="input_signUp_fieldset">
+          <fieldset>
+            <label>
+              Gender:
+              <input
+                type="radio"
+                value="option1"
+                checked={selectOptions === "option1"}
+                onChange={handleRadioChange}
+              />
+            </label>
+            <label>
+              Male
+              <input
+                type="radio"
+                value="option2"
+                checked={selectOptions === "option2"}
+                onChange={handleRadioChange}
+              />
+            </label>
+            <label>Female</label>
+          </fieldset>
+        </div>
+
+        <div className="input_signUp">
+          <label>
+            Date of Birth:
+            <input
+              type="date"
+              onChange={(e) => setDate(e.target.value)}
+              value={date}
+              className="dob"
+            />
+          </label>
+        </div>
+        <div>
+          <input
+            type="number"
+            onChange={(e) => setMobile(e.target.value)}
+            value={mobile}
+            placeholder="Enter Mobile"
+            className="input_signUp"
+          />
+        </div>
+
+        <div>
+          <input
+            type="text"
+            onChange={(e) => setAddress(e.target.value)}
+            value={address}
+            placeholder="Enter Address"
+            className="input_signUp"
+          />
+        </div>
+
+        <div>
+          <input
+            type="text"
+            onChange={(e) => setZipCode(e.target.value)}
+            value={zipCode}
+            placeholder="Enter ZipCode"
+            className="input_signUp"
+          />
+        </div>
+        <div>
+          <button className="button_signUp" onClick={() => updateProfile()}>
+            Update
+          </button>
+          {error && (
+            <div>
+              {" "}
+              <label>{error}</label>{" "}
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

@@ -10,7 +10,7 @@ const Nav = () => {
   let name;
   try {
     if (data) {
-      name = JSON.parse(data)?.user?.firstName;
+      name = JSON.parse(data)?.result?.firstName;
     }
   } catch (error) {
     console.log(error);
@@ -19,7 +19,7 @@ const Nav = () => {
   let profileImage;
   try {
     if (data) {
-      profileImage = JSON.parse(data)?.user.profileImage;
+      profileImage = JSON.parse(data)?.result?.profileImage;
     }
   } catch (error) {
     console.log(error);

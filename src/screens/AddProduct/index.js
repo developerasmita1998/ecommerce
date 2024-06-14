@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "../../App.css";
 import myImg from "../../assets/1.jpg";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import config from "../../utils/config";
 
 const AddProduct = () => {
-    const navigate = useNavigate("");
-
+    const navigate = useNavigate();
   const [error, setError] = useState("");
 
 
@@ -169,7 +168,7 @@ const AddProduct = () => {
               />
             </div>
             <button className="button1" onClick={handleAddProduct}>
-              Add Product
+              Submit
             </button>
 
             {error && <div><label>{error}</label> </div> }

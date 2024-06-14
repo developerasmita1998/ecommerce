@@ -96,7 +96,7 @@ function ProductList() {
                 <td>{item.category}</td>
                 <td>
                   <button>Delete</button>
-                  <button className="update">Update</button>
+                  <button className="update" onClick={()=>navigate("/updateProduct/" + item._id)}>Update</button>
                 </td>
               </tr>
             ))
