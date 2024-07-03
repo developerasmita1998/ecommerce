@@ -5,9 +5,9 @@ import { Navigate, useNavigate, useParams } from "react-router-dom";
 import config from "../../utils/config";
 
 const UpdateProduct = () => {
-  const navigate = useNavigate();
-  const { id } = useParams();
-  const [error, setError] = useState("");
+    const navigate = useNavigate();
+    const {id} = useParams();
+    const [error, setError] = useState("");
   //local storage se data le userData me setUserData function se dala hai.
   const [userData, setUserData] = useState([]);
   //fields
@@ -22,38 +22,41 @@ const UpdateProduct = () => {
     getProductDetailWithId();
   }, []);
 
-  const getProductDetailWithId = async () => {
-    setError("");
-    try {
-      const temp = JSON.parse(localStorage.getItem("data"));
-      const url = config.userDetail + temp?.result?.id;
-      let options = {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${temp?.auth}`,
-        },
-      };
-      const response = await fetch(url, options);
+
+  const getProductDetailWithId = async() =>
+    {
+      setError("");
+      try {
+        const temp = JSON.parse(localStorage.getItem("data"));
+        const  url = config.userDetail + temp?.result?.id;
+        let options = {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${temp?.auth}`,
+          },
+        };
+        const response = await fetch(url, options);
       if (!response.ok) {
         setError("Response was not ok");
       }
       const data = await response.json();
-      console.log(data);
+      console.log(data)
 
       if (data) {
         setProductName(data.name);
         setProductPrice(data.price);
         setProductCategory(data.category);
         setProductCompany(data.company);
-      } else {
-        setError(data.result);
-      }
+    }else{
+      setError(data.result);
+    }
     } catch (error) {
       setError(error.message);
     }
-  };
+  }
+
 
   const validate = () => {
     const productNameRegex = /^[a-zA-Z]{2,}$/;
@@ -112,43 +115,44 @@ const UpdateProduct = () => {
     return true;
   };
 
-  const handleUpdateProduct = async () => {
+  const handleUpdateProduct = async() => {
     const temp = validate();
     const user = JSON.parse(localStorage.getItem("data"));
-    if (temp) {
-      try {
-        const url = config.getProductDetail + id;
+     if(temp){
+     try{
+        const  url = config.getProductDetail + id;
 
-        let options = {
-          method: "PUT",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
+      let options = {
+        method: "PUT",
+        headers:{
+            Accept:"application/json",
+            "Content-Type":"application/json",
             Authorization: `Bearer ${user?.auth}`,
-          },
-          body: JSON.stringify({
-            name: productName,
-            price: productPrice,
-            category: productCategory,
-            company: productCompany,
-            userId: userData?._id,
-          }),
-        };
+        },
+        body: JSON.stringify({
+            name:productName,
+            price:productPrice,
+            category:productCategory,
+            company:productCompany,
+            userId:userData?._id
+        })};
 
         const response = await fetch(url, options);
-        if (!response.ok) {
-          setError("Response was not ok");
+        if(!response.ok){
+            setError("Response was not ok");
         }
         const data = await response.json();
         if (data && data?.result) {
-          setError(data.result);
-        } else {
-          navigate("/");
-        }
-      } catch (error) {
-        setError(error.message);
-      }
-    }
+            setError(data.result);
+          } else {
+            navigate('/')
+          }
+
+     }
+     catch(error){
+        setError(error.message)
+     }
+     }
   };
 
   //Name =>Empty,two char
@@ -159,54 +163,53 @@ const UpdateProduct = () => {
   return (
     <div>
       <div className="container">
-        <div className="input_div">
-          <h1>Update Product</h1>
-          <div>
-            <input
-              type="text"
-              onChange={(e) => setProductName(e.target.value)}
-              value={productName}
-              placeholder="Enter product name"
-              className="input3"
-            />
-          </div>
-          <div>
-            <input
-              type="text"
-              onChange={(e) => setProductPrice(e.target.value)}
-              value={productPrice}
-              placeholder="Enter product price"
-              className="input3"
-            />
-          </div>
-          <div>
-            <input
-              type="text"
-              onChange={(e) => setProductCategory(e.target.value)}
-              value={productCategory}
-              placeholder="Enter product Category"
-              className="input3"
-            />
-          </div>
-          <div>
-            <input
-              type="text"
-              onChange={(e) => setProductCompany(e.target.value)}
-              value={productCompany}
-              placeholder="Enter product company"
-              className="input3"
-            />
-          </div>
-          <button className="button1" onClick={handleUpdateProduct}>
-            Submit
-          </button>
-
-          {error && (
+ 
+          <div className="input_div">
+            <h1>Update Product</h1>
             <div>
-              <label>{error}</label>{" "}
+              <input
+                type="text"
+                onChange={(e) => setProductName(e.target.value)}
+                value={productName}
+                placeholder="Enter product name"
+                className="input3"
+              />
             </div>
-          )}
-        </div>
+            <div>
+              <input
+                type="text"
+                onChange={(e) => setProductPrice(e.target.value)}
+                value={productPrice}
+                placeholder="Enter product price"
+                className="input3"
+              />
+            </div>
+            <div>
+              <input
+                type="text"
+                onChange={(e) => setProductCategory(e.target.value)}
+                value={productCategory}
+                placeholder="Enter product Category"
+                className="input3"
+              />
+            </div>
+            <div>
+              <input
+                type="text"
+                onChange={(e) => setProductCompany(e.target.value)}
+                value={productCompany}
+                placeholder="Enter product company"
+                className="input3"
+              />
+            </div>
+            <button className="button1" onClick={handleUpdateProduct}>
+              Submit
+            </button>
+
+            {error && <div><label>{error}</label> </div> }
+
+          </div>
+      
       </div>
     </div>
   );

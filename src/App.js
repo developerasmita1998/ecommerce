@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SignUp from "./screens/SignUp";
 import AddProduct from "./screens/AddProduct";
 import Profile from "./screens/Profile";
-import Nav from "./nav";
+import NavBar from "./nav";
 import Footer from "./footer";
 import UpdateProduct from "./screens/UpdateProduct";
 
@@ -13,7 +13,7 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-        <Nav />
+        <NavBar />
 
         <Routes>
           <Route path="/" element={<ProductList />} />
