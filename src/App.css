@@ -106,8 +106,8 @@ tr {
   width: 19vw;
   margin-bottom: 12px;
   border-width: 5px;
-  border: 1.5px solid  #2196f3;
-  height: 3.4vh;
+  border: 1px solid  #2196f3;
+  height: 4vh;
   padding-left: 1vw;
 }
 
@@ -137,10 +137,10 @@ fieldset {
   width: 20vw;
   margin-bottom: 12px;
   border-width: 5px;
-  border: 1.5px solid  #2196f3;
+  border: 1px solid  #2196f3;
   height: 4vh;
-
 }
+
 
 .input3 {
   border: 1px solid  #2196f3;
@@ -391,4 +391,62 @@ placeholder{
 }
 
 
+.nav-link {
+  font-weight: bold;
+  color: chartreuse;
+}
 
+.productContainer {
+  margin-left: 30%;
+  height: 500px;
+  background-color: 'red';
+  overflow-y: scroll;
+  padding-bottom: 20px;
+}
+
+
+.inputBox {
+  padding: 10px;
+  display: block;
+  border: 1px solid #2196f3;
+  width: 300px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-left: 0px;
+}
+
+.invalid-input {
+ font-size: calc(5px + 1vmin);
+  display: block;
+  color: red;
+  margin-top: -15px;
+  margin-left: 0px;
+}
+
+.imgNew { 
+  margin-right: 10;
+  width: 20px;
+  height:15px;
+}
+
+.imgMany { 
+  margin-left: 10px;
+  width: 40px;
+  height:40px;
+}
+
+.flAlCenter { 
+  display: flex;
+  align-items: center;
+}
+
+
+.appButton {
+  /* margin-top: 20px; */
+  width: 150px;
+  display: block;
+  padding: 10px;
+  background-color: skyblue;
+  border: solid 1px;
+  cursor: pointer;
+}

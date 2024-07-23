@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import config from "../../utils/config";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
@@ -14,7 +15,7 @@ const ProductDetailPage = () => {
   const fetchProductDetails = async () => {
     setError("");
     try {
-      const url = `https://dummyjson.com/products/${id}`;
+      let url = config.getProductDetail + id;
       const options = {
         method: "GET",
         headers: {
@@ -30,7 +31,7 @@ const ProductDetailPage = () => {
       }
 
       const data = await response.json();
-      console.log("Fetched Product Data:", data); 
+      console.log("Fetched Product Data:", data);
       setProduct(data);
       setSelectedImage(data.thumbnail);
     } catch (error) {
@@ -49,29 +50,29 @@ const ProductDetailPage = () => {
       ) : (
         <div className="product-detail">
           <div className="product-info">
-            <h3 className="product-title">{product.title}</h3>
+            <h3 className="product-title">{product.name}</h3>
             <p className="product-price">Price: ₹{product.price}</p>
             <p className="product-category">Category: {product.category}</p>
             <p className="product-rating">Rating: {product.rating}</p>
-            
+
             {/* Return Policy Section */}
             <div className="product-policy">
               <h4>Return Policy</h4>
               <p>{product.returnPolicy}</p>
             </div>
-            
+
             {/* Brand Section */}
             <div className="product-brand">
               <h4>Brand</h4>
               <p>{product.brand}</p>
             </div>
-            
+
             {/* Warranty Section */}
             <div className="product-warranty">
               <h4>Warranty</h4>
               <p>{product.warranty}</p>
             </div>
-            
+
             {/* Product Description */}
             <div className="product-description">
               <h4>Description</h4>
@@ -81,7 +82,7 @@ const ProductDetailPage = () => {
 
           <div className="product-images">
             <div className="image-preview">
-              <img src={selectedImage} alt={product.title} />
+              <img src={selectedImage} alt={product.name} />
             </div>
             <div className="image-gallery">
               {product.images && product.images.length > 0 ? (
@@ -89,7 +90,7 @@ const ProductDetailPage = () => {
                   <img
                     key={index}
                     src={image}
-                    alt={`${product.title} ${index}`}
+                    alt={`${product.name} ${index}`}
                     onClick={() => handleImageClick(image)}
                     className="thumbnail"
                   />

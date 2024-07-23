@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import "../../App.css";
-import myImg from "../../assets/1.jpg";
 import config from "../../utils/config";
 
 const Profile = () => {
@@ -43,8 +41,6 @@ const Profile = () => {
         setError("Response was not ok");
       }
       const data = await response.json();
-      console.log(data);
-
       if (data) {
         setFirstName(data.firstName);
         setLastName(data.lastName);
@@ -200,12 +196,14 @@ const Profile = () => {
             <img
               width={"20px"}
               height={"20px"}
+              className="imgNew"
               src={photo ? URL.createObjectURL(photo) : null}
             />
           ) : (
             <img
               width={"20px"}
               height={"20px"}
+              className="imgNew"
               src={profileImage ? profileImage : null}
             />
           )}

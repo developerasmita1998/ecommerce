@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from "react";
 import "./../App.css";
-import myImg from "../assets/1.jpg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import config from "../utils/config";
 
 const Nav = () => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  const checkPath = (path) => {
+    return pathname.includes(path);
+  };
+
   const data = localStorage.getItem("data");
 
   let name;
@@ -34,19 +40,19 @@ const Nav = () => {
     <div className="navHeader">
       <div className="leftRightDiv">
         <div className="myImage">
-          <img src={profileImage ? profileImage : myImg} className="navImage" />
+          <img src={profileImage ? profileImage : config.dummy} className="navImage" />
         </div>
 
-        {data && (
+        {data && data !== '' && (
           <ul className="nav-ul">
             <li>
-              <Link to="/">Products</Link>
+              <Link lassName={pathname === '/' ? 'nav-link' : ''} to="/">Products</Link>
             </li>
             <li>
-              <Link to="/addProduct">Add Products</Link>
+              <Link className={checkPath('/addProduct') ? 'nav-link' : ''} to="/addProduct">Add Products</Link>
             </li>
             <li>
-              <Link to="/profile">Profile</Link>
+              <Link className={checkPath('/profile') ? 'nav-link' : ''} to="/profile">Profile</Link>
             </li>
             <li>
               <Link onClick={logOut} to="/login">
@@ -60,13 +66,13 @@ const Nav = () => {
         <div className="leftRightDiv">
           <ul className="nav-ul">
             <li>
-              <Link to="/signup">Sign Up </Link>
+              <Link className={checkPath('/signup') ? 'nav-link' : ''} to="/signup">Sign Up </Link>
             </li>
             <li>
-              <Link to="/login">Login </Link>
+              <Link className={checkPath('/login') ? 'nav-link' : ''} to="/login">Login </Link>
             </li>
             <li>
-              <Link to="/Contactus">Contact Us </Link>
+              <Link className={checkPath('/Contactus') ? 'nav-link' : ''} to="/Contactus">Contact Us </Link>
             </li>
           </ul>
         </div>

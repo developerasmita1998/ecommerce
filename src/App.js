@@ -8,8 +8,8 @@ import Profile from "./screens/Profile";
 import NavBar from "./nav";
 import Footer from "./footer";
 import UpdateProduct from "./screens/UpdateProduct";
-import ProductDetailPage from "./Detailpage"
-import Contactus from "./Contactus";
+import ProductDetailPage from "./screens/Detailpage"
+import Contactus from "./screens/Contactus";
 
 function App() {
   return (
@@ -25,7 +25,7 @@ function App() {
           <Route path="/updateProduct/:id" element={<UpdateProduct />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/ProductDetail/:id" element={<ProductDetailPage />} />
-          <Route path="/Contactus" element={<Contactus/>}/>
+          <Route path="/Contactus" element={<Contactus />} />
 
 
         </Routes>

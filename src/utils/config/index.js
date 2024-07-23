@@ -8,7 +8,9 @@ const productList = LIVE + 'products/'
 const updateUser = LIVE + 'updateUser/'
 const getProductDetail = LIVE + 'product/'
 const userDetail = LIVE + 'user/'
+const addQuery = LIVE + 'add-query/'
 
+const dummy = 'https://developerasmita1998.github.io/img/profile.jpg'
 
 
 export default {
@@ -19,6 +21,8 @@ export default {
     productList,
     updateUser,
     getProductDetail,
-    userDetail
+    userDetail,
+    addQuery,
+    dummy
 
 }
