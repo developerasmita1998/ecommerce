@@ -129,7 +129,19 @@ fieldset {
   background-color: #2196f3;
   width: 9vw;
   height: 4vh;
+}
 
+.button_delete {
+  background-color: white;
+  width: 9vw;
+  height: 4vh;
+}
+
+.button_update {
+  background-color: #2196f3;
+  width: 9vw;
+  height: 4vh;
+  margin-left: 20px;
 }
 
 .input_signUp_fieldset {
@@ -449,4 +461,37 @@ placeholder{
   background-color: skyblue;
   border: solid 1px;
   cursor: pointer;
+}
+
+
+.mt10{
+   margin-top: 10px;
+}
+
+.mb10{
+   margin-bottom: 10px;
+}
+
+.mt20{
+   margin-top: 20px;
+}
+
+.mb20{
+   margin-bottom: 20px;
+}
+
+.ml10{
+   margin-top: 10px;
+}
+
+.mr10{
+   margin-bottom: 10px;
+}
+
+.ml20{
+   margin-top: 20px;
+}
+
+.mr20{
+   margin-bottom: 20px;
 }

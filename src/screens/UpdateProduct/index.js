@@ -1,214 +1,222 @@
-import React, { useEffect, useState } from "react";
-import "../../App.css";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
-import config from "../../utils/config";
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom'
+import config from '../../utils/config';
+
+
+const MAX_FILES = 3;
+const MAX_SIZE_MB = 5;
+const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024;
 
 const UpdateProduct = () => {
+  const [name, setName] = useState('');
+  const [price, setPrice] = useState('');
+  const [category, setCategory] = useState('');
+  const [company, setCompnay] = useState('');
+  const [rating, setRating] = useState(null);
+  const [quantity, setQuantity] = useState(null);
+  const [returnPoilcy, setReturnPolicy] = useState('');
+  const [warranty, setWarranty] = useState('');
+  const [description, setDescription] = useState('');
+  const [thumbnail, setSelectedThumbImage] = useState(null);
+  const [thumbnailFromServer, setServerThumbnail] = useState(null);
+  const [images, setImage] = useState(null);
+  const [imagesFromServer, setServerImages] = useState(null);
+  const [error, setError] = useState(false);
+
+  const params = useParams();
   const navigate = useNavigate();
-  const { id } = useParams();
-  const [error, setError] = useState("");
-  //local storage se data le userData me setUserData function se dala hai.
-  const [userData, setUserData] = useState([]);
-  //fields
-  const [productName, setProductName] = useState("");
-  const [productPrice, setProductPrice] = useState("");
-  const [productCategory, setProductCategory] = useState("");
-  const [productCompany, setProductCompany] = useState("");
+
+  let token = localStorage.getItem('token')
+  try {
+    token = token ? `bearer ${JSON.parse(token)}` : null;
+  } catch (error) {
+    console.error("Error parsing JSON token:", error);
+  }
 
   useEffect(() => {
-    const temp = JSON.parse(localStorage.getItem("data"));
-    setUserData(temp?.user);
-    getProductDetailWithId();
-  }, []);
+    getProductDetails();
+  }, [])
 
 
-  const getProductDetailWithId = async () => {
-    setError("");
-    try {
-      const temp = JSON.parse(localStorage.getItem("data"));
-      const url = config.userDetail + temp?.result?.id;
-      let options = {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${temp?.auth}`,
-        },
-      };
-      const response = await fetch(url, options);
-      if (!response.ok) {
-        setError("Response was not ok");
-      }
-      const data = await response.json();
-      if (data) {
-        setProductName(data.name);
-        setProductPrice(data.price);
-        setProductCategory(data.category);
-        setProductCompany(data.company);
-      } else {
-        setError(data.result);
-      }
-    } catch (error) {
-      setError(error.message);
+
+  const getProductDetails = async () => {
+    console.warn(params)
+    let result = await fetch(config.getProductDetail + params.id, {
+      headers: { authorization: token }
+    });
+    let res = await result.json();
+    if (result?.status && result.status < 202) {
+      setName(res.name);
+      setPrice(res.price);
+      setCategory(res.category);
+      setCompnay(res.company)
+      setQuantity(res.quantity)
+      setDescription(res.description)
+      setRating(res.rating)
+      setReturnPolicy(res.returnPolicy)
+      setWarranty(res.warranty)
+      setServerThumbnail(res.thumbnail)
+      setServerImages(res.images)
+    } else {
+      alert(res?.result.toString())
     }
   }
 
+  const updateProduct = async () => {
+    const temp = JSON.parse(localStorage.getItem("data"));
 
-  const validate = () => {
-    const productNameRegex = /^[a-zA-Z]{2,}$/;
-    const productPriceRegex = /^[0-9]+(\.[0-9]{1,2})?$/;
-    const productCategoryRegex = /^[a-zA-Z]{2,}$/;
-    const productCompanyRegex = /^[a-zA-Z]{2,}$/;
+    let token = temp?.auth;
+    let userId = temp?.result?._id;
+    if (name && price && category && company && rating && quantity && returnPoilcy && warranty && description) {
+      let formData = new FormData();
+      if (thumbnail) { formData.append('thumbnail', thumbnail); }
+      if (images && images !== '') { images.forEach((file) => { formData.append('images', file) }) }
 
-    setError("");
+      formData.append('name', name);
+      formData.append('price', price);
+      formData.append('category', category);
+      formData.append('company', company);
+      formData.append('userId', userId);
+      formData.append('quantity', quantity);
+      formData.append('description', description);
+      formData.append('rating', rating);
+      formData.append('returnPolicy', returnPoilcy);
+      formData.append('warranty', warranty);
 
-    if (!productName) {
-      setError("Please enter Product Name.");
-      return false;
-    }
-    if (!productNameRegex.test(productName)) {
-      setError(
-        "Product Name should be at least 2 characters long and contain only letters."
-      );
-      return false;
-    }
-
-    if (!productPrice) {
-      setError("Please enter Product Price.");
-      return false;
-    }
-    if (!productPriceRegex.test(productPrice)) {
-      setError("Price should be a valid number with up to two decimal places.");
-      return false;
-    }
-    if (parseFloat(productPrice) <= 0) {
-      setError("Price should be greater than 0.");
-      return false;
-    }
-
-    if (!productCategory) {
-      setError("Please enter Product Category.");
-      return false;
-    }
-    if (!productCategoryRegex.test(productCategory)) {
-      setError(
-        "Product Category should be at least 2 characters long and contain only letters."
-      );
-      return false;
-    }
-
-    if (!productCompany) {
-      setError("Please enter Product Company.");
-      return false;
-    }
-    if (!productCompanyRegex.test(productCompany)) {
-      setError(
-        "Product Company should be at least 2 characters long and contain only letters."
-      );
-      return false;
-    }
-
-    return true;
-  };
-
-  const handleUpdateProduct = async () => {
-    const temp = validate();
-    const user = JSON.parse(localStorage.getItem("data"));
-    if (temp) {
-      try {
-        const url = config.getProductDetail + id;
-
-        let options = {
-          method: "PUT",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user?.auth}`,
-          },
-          body: JSON.stringify({
-            name: productName,
-            price: productPrice,
-            category: productCategory,
-            company: productCompany,
-            userId: userData?._id
-          })
-        };
-
-        const response = await fetch(url, options);
-        if (!response.ok) {
-          setError("Response was not ok");
-        }
-        const data = await response.json();
-        if (data && data?.result) {
-          setError(data.result);
-        } else {
-          navigate('/')
-        }
-
-      }
-      catch (error) {
-        setError(error.message)
+      let result = await fetch(config.getProductDetail + params.id, {
+        method: 'PUT',
+        body: formData,
+        headers: { "authorization": token }
+      });
+      let res = await result.json();
+      if (result?.status && result.status < 202) {
+        navigate('/')
+      } else {
+        alert(res?.result.toString())
       }
     }
+    else {
+      if (!thumbnail || !images) alert("All fields are required")
+      else setError(true); return false
+
+    }
+  }
+
+  const handleFileChange = (event) => {
+    const selectedFiles = Array.from(event.target.files);
+
+    if (selectedFiles.length > MAX_FILES) {
+      event.target.value = null;
+      alert('You can only select up to 3 images.');
+      return;
+    }
+
+    const oversizedFiles = selectedFiles.filter(file => file.size > MAX_SIZE_BYTES);
+
+    if (oversizedFiles.length > 0) {
+      event.target.value = null;
+      alert(`Each file must be less than ${MAX_SIZE_MB} MB.`);
+      return;
+    }
+
+    if (selectedFiles.length > 0) {
+      setImage(selectedFiles);
+    } else {
+      console.log(selectedFiles);
+    }
+
   };
 
-  //Name =>Empty,two char
-  //Price=>Empty,digit,>0
-  //Category same as name
-  //Company same as name
+
+  const handleThumbImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) { setSelectedThumbImage(file); }
+  };
 
   return (
-    <div>
-      <div className="container">
+    <div className='productContainer'>
 
-        <div className="input_div">
-          <h1>Update Product</h1>
-          <div>
-            <input
-              type="text"
-              onChange={(e) => setProductName(e.target.value)}
-              value={productName}
-              placeholder="Enter product name"
-              className="input3"
-            />
-          </div>
-          <div>
-            <input
-              type="text"
-              onChange={(e) => setProductPrice(e.target.value)}
-              value={productPrice}
-              placeholder="Enter product price"
-              className="input3"
-            />
-          </div>
-          <div>
-            <input
-              type="text"
-              onChange={(e) => setProductCategory(e.target.value)}
-              value={productCategory}
-              placeholder="Enter product Category"
-              className="input3"
-            />
-          </div>
-          <div>
-            <input
-              type="text"
-              onChange={(e) => setProductCompany(e.target.value)}
-              value={productCompany}
-              placeholder="Enter product company"
-              className="input3"
-            />
-          </div>
-          <button className="button1" onClick={handleUpdateProduct}>
-            Submit
-          </button>
+      <h1>Update Product</h1>
+      <input type="text" placeholder='Enter product name' className='inputBox'
+        value={name} onChange={(e) => { setName(e.target.value) }}
+      />
+      {error && !name && <span className='invalid-input'>Enter valid name</span>}
 
-          {error && <div><label>{error}</label> </div>}
+      <input type="text" placeholder='Enter product price' className='inputBox'
+        value={price} onChange={(e) => isNaN(e.target.value) ? null : setPrice((e.target.value))}
+      />
+      {error && !price && <span className='invalid-input'>Enter valid price</span>}
 
-        </div>
+      <input type="text" placeholder='Enter product category' className='inputBox'
+        value={category} onChange={(e) => { setCategory(e.target.value) }}
+      />
+      {error && !category && <span className='invalid-input'>Enter valid category</span>}
+
+      <input type="text" placeholder='Enter product company' className='inputBox'
+        value={company} onChange={(e) => { setCompnay(e.target.value) }}
+      />
+      {error && !company && <span className='invalid-input'>Enter valid company</span>}
+
+      <input type="text" placeholder='Enter product quantity' className='inputBox'
+        value={quantity} onChange={(e) => isNaN(e.target.value) ? null : setQuantity((e.target.value))}
+      />
+      {error && !quantity && <span className='invalid-input'>Enter valid quantity</span>}
+
+      <input type="text" placeholder='Enter product rating' className='inputBox'
+        value={rating} onChange={(e) => isNaN(e.target.value) ? null : setRating((e.target.value))}
+      />
+      {error && !rating && <span className='invalid-input'>Enter valid Rating</span>}
+
+      <input type="text" placeholder='Enter product return policy' className='inputBox'
+        value={returnPoilcy} onChange={(e) => { setReturnPolicy(e.target.value) }}
+      />
+      {error && !returnPoilcy && <span className='invalid-input'>Enter valid return policy</span>}
+
+      <input type="text" placeholder='Enter product warranty' className='inputBox'
+        value={warranty} onChange={(e) => { setWarranty(e.target.value) }}
+      />
+      {error && !warranty && <span className='invalid-input'>Enter valid Warranty</span>}
+
+      <input type="text" placeholder='Enter product description' className='inputBox'
+        value={description} onChange={(e) => { setDescription(e.target.value) }}
+      />
+      {error && !description && <span className='invalid-input'>Enter valid description</span>}
+
+      <div className="inputBox">
+        <input type="file" accept="image/*" id="imageInput" onChange={(e) => handleThumbImageChange(e)} />
+
+        {thumbnailFromServer || thumbnail ? (
+          <img
+            src={thumbnail ? URL.createObjectURL(thumbnail) : thumbnailFromServer ? `${thumbnailFromServer}` : null}
+            alt="Selected" className="imgNew" />) : null}
+
+      </div>
+
+      <div className="inputBox">
+        <input type="file" accept="image/*" multiple id="imageInput" onChange={(e) => handleFileChange(e)} />
+      </div>
+
+      <div className='flAlCenter'>
+
+        <button onClick={updateProduct} className='appButton'>Update Product</button>
+
+        {images && images !== '' ? images.map((img, index) => (
+          <img
+            src={img ? URL.createObjectURL(img) : null}
+            alt={`Selected ${index}`} className="imgMany" />
+        )) :
+          imagesFromServer && imagesFromServer !== '' ? imagesFromServer.map((img, index) => (
+            <img
+              src={img}
+              alt={`Selected ${index}`} className="imgMany" />
+          ))
+            : null}
+
+
 
       </div>
     </div>
-  );
-};
+  )
+}
+
 export default UpdateProduct;
