@@ -65,6 +65,9 @@ const Nav = () => {
             <li>
               <Link to="/login">Login </Link>
             </li>
+            <li>
+              <Link to="/Contactus">Contact Us </Link>
+            </li>
           </ul>
         </div>
       )}

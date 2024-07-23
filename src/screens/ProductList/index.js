@@ -120,7 +120,7 @@ function ProductList() {
   };
 
   return (
-    <div className="container">
+    <div className="listcontainer">
 
     <h3 className="heading_addProduct">Product List</h3>
       <div className="input_div">

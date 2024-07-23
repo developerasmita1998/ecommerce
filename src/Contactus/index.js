@@ -1,8 +1,8 @@
   import React, { useState } from "react";
     const Contactus =() =>{
     const [contactData,setContactData] = useState([])
-    const [name,setName]=useState('')
-    const [mobile,setMobile] = ('')
+    const [name,setName]= useState('')
+    const [mobile,setMobile] = useState('')
     const [email,setEmail] = useState('')
     const [subject,setSubject] = useState('')
     const [description,setDescription] = useState('')
@@ -30,7 +30,7 @@
             setError("Please enter your description.");
             return false;
           }
-          alert("All fields are mandatory");
+          alert("All good");
             return true;
         
     }
@@ -45,15 +45,16 @@
         onChange={(e)=>setName(e.target.value)} className="name"/>
 
         <input type="number" value={mobile} placeholder=" Enter your mobile number" 
-        onChange={(e)=>setName(e.target.value)} className="name"/>
+        onChange={(e)=>setMobile(e.target.value)} className="name"/>
 
 
         <input type="email" value={email}    placeholder="Enter a valid email" 
              onChange={(e)=>setEmail(e.target.value)} className="name"/>
         <input type="text" value={subject} placeholder="Enter your subject" 
         onChange={(e)=>setSubject(e.target.value)} className="subject"/>
-        <textarea 
+        <input 
          value={description} 
+         placeholder="Enter description" 
          onChange={(e) => setDescription(e.target.value)} 
         className="description"/>
        <button className="button" onClick={validate}>SUBMIT</button>

@@ -43,7 +43,7 @@ const ProductDetailPage = () => {
   };
 
   return (
-    <div className="container">
+    <div className="listcontainer">
       {error ? (
         <p>{error}</p>
       ) : (
