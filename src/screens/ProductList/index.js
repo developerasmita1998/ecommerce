@@ -65,8 +65,8 @@ function ProductList() {
         setError("Response was not ok");
       }
       const data = await response.json();
-      setProductData(data);
-      setFilterData(data);
+      setProductData(data?.products);
+      setFilterData(data?.products);
     } catch (error) {
       setError(error.message);
     }
@@ -78,50 +78,128 @@ function ProductList() {
     const filteredData =
       productData.length > 0 &&
       productData.filter((item) =>
-        item.name.toLowerCase().includes(e.target.value.toLowerCase())
+        item.title.toLowerCase().includes(e.target.value.toLowerCase())
       );
 
     setFilterData(filteredData);
   };
   
-  const deleteProduct =async(id) =>{
-    setError("");
-    try {
-      const temp = JSON.parse(localStorage.getItem("data"));
-      let url = config.getProductDetail + id;
-      let options = {
-        method: "DELETE",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${temp?.auth}`,
-        },
-      };
+  // const deleteProduct =async(id) =>{
+  //   setError("");
+  //   try {
+  //     const temp = JSON.parse(localStorage.getItem("data"));
+  //     let url = config.getProductDetail + id;
+  //     let options = {
+  //       method: "DELETE",
+  //       headers: {
+  //         Accept: "application/json",
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${temp?.auth}`,
+  //       },
+  //     };
 
-      const response = await fetch(url, options);
-      if (!response.ok) {
-        setError("Response was not ok");
-      }
-      const data = await response.json();
-     if (data.deletedCount) {
-       getList();
-     }
-    } catch (error) {
-      setError(error.message);
-    }
+  //     const response = await fetch(url, options);
+  //     if (!response.ok) {
+  //       setError("Response was not ok");
+  //     }
+  //     const data = await response.json();
+  //    if (data.deletedCount) {
+  //      getList();
+  //    }
+  //   } catch (error) {
+  //     setError(error.message);
+  //   }
         
-  }; 
-  console.log('my data', data);
+  // }; 
+  // console.log('my data', data);
+  
+  
+  // console.log(productData);
+  const handleImageClick = (id) => {
+    navigate(`/ProductDetail/${id}`);
+  };
+
   return (
     <div className="container">
 
+    <h3 className="heading_addProduct">Product List</h3>
+      <div className="input_div">
+        <input
+          type="text"
+          onChange={onChangeSearch}
+          value={searchProduct}
+          placeholder="Search Product"
+          className="input1"
+        />
+      </div>
+
+      <div className="api_data_show">      
+        {
+          filterData && filterData.length >
+           0 && filterData?.map((item, ind)=>
+         (
+
+              
+          <div className="image_list" key={item.id}>
+                <div className="image_list_1"onClick={() => handleImageClick(item.id)}>
+                 {item.thumbnail ? (
+                        <img src={item.thumbnail} width="300" height='300' />
+                      )
+                     : (
+                      <p>No image</p>
+                    )}
+
+                  </div>
+
+                    <div className="image_list_2">
+                   
+                    <div>
+                      <span style={{marginRight:'6px'}}>Title:</span>
+                    <label style={{color:"green"}}>{item.title}</label>
+                    </div>
+
+                    <div>
+                      <span style={{marginRight:'6px'}}>Price:</span>
+                    <label style={{color:"green"}}>{item.price}</label></div>
+                    </div>
+
+                    <div className="image_list_2">
+                   
+                   <div>
+                     <span style={{marginRight:'6px'}}>Category:</span>
+                   <label style={{color:"green"}}>{item.category}</label>
+                   </div>
+
+                   <div>
+                     <span style={{marginRight:'6px'}}>Rating:</span>
+                   <label style={{color:"green"}}>{item.rating}</label></div>
+                   </div>
+
+
+
+
+
+           </div>
+               
+
+                     
+                      
+          ))
+        }
+      </div>
     </div>
   );
 }
 
 export default ProductList;
 
-
+// {item.images && item.images.length > 0 ? (
+//   item.images.map((image, ind)=> (
+//     <img src={image} width="600" />
+//   ))
+// ) : (
+//   <p>No image</p>
+// )}
 
 {/* <h3 className="heading_addProduct"
 >

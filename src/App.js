@@ -8,6 +8,8 @@ import Profile from "./screens/Profile";
 import NavBar from "./nav";
 import Footer from "./footer";
 import UpdateProduct from "./screens/UpdateProduct";
+import ProductDetailPage from "./Detailpage"
+import Contactus from "./Contactus";
 
 function App() {
   return (
@@ -22,6 +24,10 @@ function App() {
           <Route path="/addProduct" element={<AddProduct />} />
           <Route path="/updateProduct/:id" element={<UpdateProduct />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/ProductDetail/:id" element={<ProductDetailPage />} />
+          <Route path="/Contactus" element={<Contactus/>}/>
+
+
         </Routes>
 
         <Footer />
