@@ -129,8 +129,8 @@ function ProductList() {
       <div className="api_data_show">
         {
           filterData && filterData.length > 0 && filterData?.map((item, ind) => (
-            <div className="image_list" key={item.id}>
-              <div className="image_list_1" onClick={() => handleImageClick(item?._id)}>
+            <div className="image_list" onClick={() => handleImageClick(item?._id)} key={item.id}>
+              <div className="image_list_1">
                 {item.thumbnail ? (<img src={item.thumbnail} width="300" height='300' />)
                   : (<p>No image</p>)}
               </div>
