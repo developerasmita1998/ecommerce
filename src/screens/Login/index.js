@@ -48,12 +48,19 @@ function Login() {
         setError("Network response was not ok");
       }
       const data = await response.json();
-      if (data) {
+      console.log(data);
+      
+      if (data && data?.auth) {      
         setLoginDataStore(data);
         localStorage.setItem("data", JSON.stringify(data));
         navigate("/");
       } else {
-        setError(data);
+        if(data?.result){
+          setError(data?.result);
+        }else{
+           setError(data);
+        }
+     
         setLoginDataStore([]);
       }
     } catch (error) {
